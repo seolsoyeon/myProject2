@@ -11,10 +11,12 @@
 
 <title>My Project2</title>
 <!-- Bootstrap Core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
 
 <link href="../css/bootstrap-theme.min.css" rel="stylesheet">
-<!-- MetisMenu CSS -->
+
+ <!-- MetisMenu CSS -->
 <link href="../css/metisMenu.min.css" rel="stylesheet">
 
 <!-- Timeline CSS -->
@@ -25,6 +27,9 @@
 
 <!-- Custom Fonts -->
 <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+<link href='http://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,8 +50,20 @@
         </nav>
 
         <div id="page-wrapper">
-        
-        
+        	<h1 id="h1" align="center">환영합니다</h1>
+        	<div id="ic_place1" style="display: none">
+				<jsp:include page="../jsp/Dashboard.jsp"></jsp:include>
+			</div>
+        	<div id="ic_place2" style="display: none">
+				<jsp:include page="../jsp/Tables.jsp"></jsp:include>
+			</div>
+<%--         	<div id="ic_place3" style="display: none">
+				<jsp:include page="../jsp/Dashboard.jsp"></jsp:include>
+			</div>
+        	<div id="ic_place4" style="display: none">
+				<jsp:include page="../jsp/Dashboard.jsp"></jsp:include>
+			</div> --%>
+			
 		</div>
         <!-- /#page-wrapper -->
 
@@ -57,7 +74,7 @@
     <script src="../js/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
+    <!-- <script src="../js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../js/metisMenu.min.js"></script>
@@ -69,6 +86,23 @@
        
     <!-- Custom Theme JavaScript -->
     <script src="../js/sb-admin-2.js"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+    
+<script type="text/javascript">
+function showDashboard(){
+	$("#h1").css("display", "none");
+	$("#ic_place1").css("display", "");
+}
+
+function showTables(){
+	$("#h1").css("display", "none");
+	$("#ic_place1").css("display", "none");
+	$("#ic_place2").css("display", "");	
+	
+}
+</script>
 </body>
 </html>
 
