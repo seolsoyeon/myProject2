@@ -102,8 +102,6 @@ function showTables(){
 	$("#ic_place2").css("display", "");	
 	
 }
-
-
 </script>
 </body>
 </html>

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style>
 .card-container.card {
     max-width: 350px;
     padding: 40px 40px;
 }
-
 .btn {
     font-weight: 700;
     height: 36px;
@@ -15,7 +15,6 @@
     user-select: none;
     cursor: default;
 }
-
 /*
  * Card component
  */
@@ -33,7 +32,6 @@
     -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
-
 .profile-img-card {
     width: 96px;
     height: 96px;
@@ -43,7 +41,6 @@
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
-
 /*
  * Form styles
  */
@@ -54,7 +51,6 @@
     margin: 10px 0 0;
     min-height: 1em;
 }
-
 .reauth-email {
     display: block;
     color: #404040;
@@ -69,14 +65,12 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-
 .form-signin #inputEmail,
 .form-signin #inputPassword {
     direction: ltr;
     height: 44px;
     font-size: 16px;
 }
-
 .form-signin input[type=email],
 .form-signin input[type=password],
 .form-signin input[type=text],
@@ -90,14 +84,12 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-
 .form-signin .form-control:focus {
     border-color: rgb(104, 145, 162);
     outline: 0;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
 }
-
 .btn.btn-signin {
     /*background-color: #4d90fe; */
     /* background-color: rgb(104, 145, 162); */
@@ -115,17 +107,14 @@
     -webkit-transition: all 0.218s;
     transition: all 0.218s;
 }
-
 /* .btn.btn-signin:hover,
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
     background-color: rgb(12, 97, 33);
 } */
-
 .forgot-password {
     color: rgb(104, 145, 162);
 }
-
 .forgot-password:hover,
 .forgot-password:active,
 .forgot-password:focus{
@@ -137,6 +126,8 @@
 <div class="navbar-default sidebar" role="navigation">
 	<div class="sidebar-nav navbar-collapse">
 		<ul class="nav" id="side-menu">
+		<c:choose>
+			<c:when test="${empty user.role}">
 			<li><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
 					Log In<span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level">
@@ -144,6 +135,17 @@
 					<li><a href="#register" data-toggle="modal">회원가입</a></li> 
 				</ul> <!-- /.nav-second-level -->
 			</li>
+			</c:when>
+			<c:otherwise>
+			<li><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
+					Log In<span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level">
+					<li><a href="#login" data-toggle="modal">로그인</a></li>
+					<li><a href="#register" data-toggle="modal">회원가입</a></li> 
+				</ul> <!-- /.nav-second-level -->
+			</li>
+			</c:otherwise>
+		</c:choose>			
 			<li><a href="#" onclick="showDashboard();"><i class="fa fa-dashboard fa-fw"></i>
 					Dashboard</a></li>
 			<li><a href="#" onclick="showTables();"><i class="fa fa-table fa-fw"></i>
@@ -204,7 +206,7 @@
 		                        <input type="checkbox" value="remember-me"> Remember me
 		                    </label>
 		                </div>
-		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" onclick="Check();">Sign in</button>
+		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" style="cursor:pointer;" onclick="Check();">Sign in</button>
 		            </form><!-- /form -->
 		            <a href="#" class="forgot-password">
 		                Forgot the password?
@@ -235,7 +237,7 @@
 		                
 		                <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone Number" required>
 		                <br>
-		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" onclick="addUser();">Register</button>
+		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" style="cursor:pointer;" onclick="addUser();">Register</button>
 		            </form><!-- /form -->
 		        </div><!-- /card-container -->
 		    </div><!-- /container -->
@@ -267,18 +269,25 @@ function addUser() {
 	});
 }
 
-function Check() {
+function Login() {
 	$.ajax({
 		type:"POST",
-		url: "/check.do",
-		data:{},
+		url: "/myProject2/login.do",
+		data:{
+			userId:$("#inputEmail").val(),
+			password:$("#inputPassword").val(),
+		},
 		dataType:"json",
 		error:function(xhr, status, e){
 			$("#chIdPwd").html("xhr ==> "+xhr+", status ==> "+status+", e ==> "+e);
 		},
 		success: function(data){
-			$("#chIdPwd").html("아이디 / 패스워드를 다시 확인해주세요");
-			$("#chIdPwd").css("color", "red");
+			if($.trim(data) == 'false'){
+				$("#chIdPwd").html("아이디 / 패스워드를 다시 확인해주세요");
+				$("#chIdPwd").css("color", "red");
+			}else if($.trim(data) == 'true'){
+				$("#logindo").submit();
+			}
 		}
 	});
 }

@@ -36,17 +36,12 @@ public class UserController {
 	int pageSize;
 
 	@RequestMapping("/addUser.do")
-	public @ResponseBody String addUser(@ModelAttribute("user") User user, HttpSession session) throws Exception {
+	public @ResponseBody String addUser(@ModelAttribute("user") User user) throws Exception {
 		System.out.println("addUser 들어옴");
 		
 		System.out.println("11111"+user);
 		
-		
 		int confirm = userService.addUser(user);
-			
-		if(session.getAttribute("user") == null){
-			session.setAttribute("user", user);
-		}
 
 		if(confirm == 1){
 			return "true";
@@ -66,52 +61,46 @@ public class UserController {
 		return temp;
 	}
 	
-/*	  @RequestMapping("/login.do") 
-	  public @ResponseBody String login(@RequestParam("userId") String userId,
-			  							@RequestParam("password") String password, HttpSession session) throws Exception {
+	@RequestMapping("/login.do") 
+	public @ResponseBody String login(@ModelAttribute("user") User user, HttpSession session) throws Exception {
+
+		System.out.println("/login.do 들어감");
+		System.out.println(user);
+
+		User dbUser = userService.getUser(user.getUserId());
+
+
+
+		if(dbUser !=null ){
+			if (user.getPassword().equals(dbUser.getPassword()) && user.getUserId().equals(dbUser.getUserId())) {
+				session.setAttribute("user", dbUser); 
+				System.out.println("/login.do DB Ok");
+				return "true"; 
+			}
+			else{
+				return "false";
+			}
+		}else{
+			System.out.println("/login.do DB 실패");
+			return "false";
+		}
+	}
 	  
-		  System.out.println("/login.do 들어감");
-		  System.out.println(userId);
-		  
-		  User dbUser = userService.getUser(userId);
-		  Owner dbOwner = ownerService.getOwner(userId);
-		  Musician dbMusician = musicianService.getMusician(userId);
-		  
-	  
-		  if(dbUser !=null ){
-			  if (password.equals(dbUser.getPassword()) && userId.equals(dbUser.getUserId())) {
-						  	session.setAttribute("user", dbUser); 
-					  		session.setAttribute("owner", dbOwner); 
-					  		session.setAttribute("musician", dbMusician); 
-					  		System.out.println("/login.do DB Ok");
-					  		return "true"; 
-			  }
-			  else{
-				  return "false";
-			  }
-		  }else{
-			  	System.out.println("/login.do DB 실패");
-			  	return "false";
-		  }
-	  }
-	  
-	  @RequestMapping("/logindo.do") 
-	  public String logintt(@ModelAttribute("user") User user, 
-			  @ModelAttribute("owner") Owner owner,
-			  @ModelAttribute("musician") Musician musician, HttpSession session) throws Exception {
-		  System.out.println("/logindo.do 들어감");
-	  		return "redirect:/jsp/logon_main.jsp"; 
-	  }
+	@RequestMapping("/logindo.do") 
+	public String logintt(@ModelAttribute("user") User user) throws Exception {
+		System.out.println("/logindo.do 들어감");
+		return "redirect:/jsp/index.jsp"; 
+	}
 	  
 	 
-	  @RequestMapping("/logout.do") public String logout(HttpSession session)
-		  throws Exception {
-		  
-		  System.out.println("/logout.do");
-		  
-		  session.invalidate();
-		  
-		  return "redirect:/jsp/main.jsp"; 
-	  }*/
+	@RequestMapping("/logout.do") public String logout(HttpSession session)
+			throws Exception {
+
+		System.out.println("/logout.do");
+
+		session.invalidate();
+
+		return "redirect:/jsp/index.jsp"; 
+	}
 	
 }

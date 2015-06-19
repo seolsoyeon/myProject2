@@ -17,7 +17,7 @@
 	<insert id="addUser" parameterType="user">
 		INSERT
 		INTO
-		users(user_id, password, phone,role)
+		myuser(user_id, password, phone,role)
 		VALUES(
 		#{userId},#{password},#{phone}, 'u')
 	</insert>
@@ -25,7 +25,7 @@
  	<select id="getUser" parameterType="string" resultMap="userSelectMap">
 		SELECT
 		user_id,password,phone,role
-		FROM users
+		FROM myuser
 		WHERE user_id = #{value}
 	</select>
 

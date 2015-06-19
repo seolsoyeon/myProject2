@@ -1,4 +1,4 @@
-DROP TABLE users;
+DROP TABLE myuser;
 /*
 DROP TABLE review;
 /*Review Test 용*/
@@ -14,7 +14,7 @@ DROP SEQUENCE seq_qna_qna_no;
 DROP  SEQUENCE seq_reply_rp_no;
 */
 
-CREATE TABLE users(
+CREATE TABLE myuser(
  user_id VARCHAR2(50) NOT NULL,
  password VARCHAR2(100) NOT NULL,
  phone VARCHAR2(30) NOT NULL,

@@ -4,13 +4,13 @@ $(document).ready(function() {
 	      
 	      var id = $("#userId").val();
 	      var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/; 
-	      if(id.length<6 || id.length>12){
+	      if(id.length<6 || id.length>40){
 	         $('#chId').html("6글자 이상 입력");
 	         document.getElementById("chId").style.color="red";
 	      }else if(regex.test(id) == false) {
 	    	  $('#chId').html("잘못된 이메일 형식입니다.");
 	      }else {
-	       var url = "/checkDuplication.do";   //Controller 호출
+	       var url = "/myProject2/checkDuplication.do";   //Controller 호출
 	       var postString = "";       // post방식으로 처리하기 위한 파라미터들
 	       postString   = "userId=" + id;
 
