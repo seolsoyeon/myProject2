@@ -140,8 +140,8 @@
 			<li><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
 					Log In<span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level">
-					<li><a href="#login" data-toggle="modal">LogIn</a></li>
-					<li><a href="morris.html">Morris.js Charts</a></li>
+					<li><a href="#login" data-toggle="modal">로그인</a></li>
+					<li><a href="#register" data-toggle="modal">회원가입</a></li> 
 				</ul> <!-- /.nav-second-level -->
 			</li>
 			<li><a href="#" onclick="showDashboard();"><i class="fa fa-dashboard fa-fw"></i>
@@ -186,24 +186,25 @@
 <!-- /.navbar-static-side -->
 
 
-<!-- Modal -->
+<!-- Login Modal -->
 <div id="login" class="modal fade">
     <div class="modal-dialog">
 		    <div class="container" style="width: 100%">
 		        <div class="card card-container">
-		            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
 		            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
 		            <p id="profile-name" class="profile-name-card"></p>
 		            <form class="form-signin">
 		                <span id="reauth-email" class="reauth-email"></span>
 		                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 		                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		                <span id="ckIdPwd"></span>
+		                
 		                <div id="remember" class="checkbox">
 		                    <label>
 		                        <input type="checkbox" value="remember-me"> Remember me
 		                    </label>
 		                </div>
-		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" onclick="Check();">Sign in</button>
 		            </form><!-- /form -->
 		            <a href="#" class="forgot-password">
 		                Forgot the password?
@@ -212,3 +213,73 @@
 		    </div><!-- /container -->
 	</div>
 </div>
+
+<!--Join Modal -->
+<div id="register" class="modal fade">
+    <div class="modal-dialog">
+		    <div class="container" style="width: 100%">
+		        <div class="card card-container">
+		            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+		            <p id="profile-name" class="profile-name-card"></p>
+		            <form class="form-signin">
+		                <span id="reauth-email" class="reauth-email"></span>
+		                
+		                <span id="chId"></span>
+		                <input type="email" name="userId" id="userId" class="form-control" placeholder="Email address" required autofocus>
+		                
+		                <span id="chPwd"></span>
+		                <input type="password" name="password" id="pass" class="form-control" placeholder="Password" required>
+		                
+		                <span id="chPwd2"></span>
+		                <input type="password" name="password" id="pass2" class="form-control" placeholder="Password" required>
+		                
+		                <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone Number" required>
+		                <br>
+		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" onclick="addUser();">Register</button>
+		            </form><!-- /form -->
+		        </div><!-- /card-container -->
+		    </div><!-- /container -->
+	</div>
+</div>
+<script type="text/javascript" src="../js/join.js"></script> 
+<script>
+function addUser() {
+	$.ajax({
+		type:"POST",
+		url:"/myProject2/addUser.do",
+		data:{
+			userId:$("#userId").val(),
+			password:$("#pass").val(),
+			phone:$("#phone").val()
+		},
+		dataType:"",
+		error:function(xhr, status, e){
+			alert("xhr ==> "+xhr+", status ==> "+status+", e ==> "+e);
+		},
+		success:function(data){
+			if(jQuery.trim(data) == 'true'){
+				alert("회원가입이 완료되었습니다");
+				location.href="/myProject2/jsp/index.jsp";
+			}else if(jQuery.trim(data) == 'false'){
+				alert("다시 시도해 주세요");
+			}
+		}
+	});
+}
+
+function Check() {
+	$.ajax({
+		type:"POST",
+		url: "/check.do",
+		data:{},
+		dataType:"json",
+		error:function(xhr, status, e){
+			$("#chIdPwd").html("xhr ==> "+xhr+", status ==> "+status+", e ==> "+e);
+		},
+		success: function(data){
+			$("#chIdPwd").html("아이디 / 패스워드를 다시 확인해주세요");
+			$("#chIdPwd").css("color", "red");
+		}
+	});
+}
+</script>
