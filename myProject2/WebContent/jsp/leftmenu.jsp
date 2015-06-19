@@ -200,12 +200,7 @@
 		                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 		                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 		                <span id="ckIdPwd"></span>
-		                
-		                <div id="remember" class="checkbox">
-		                    <label>
-		                        <input type="checkbox" value="remember-me"> Remember me
-		                    </label>
-		                </div>
+		                <br>
 		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" style="cursor:pointer;" onclick="Login();">Sign in</button>
 		            </form><!-- /form -->
 		            <a href="#" class="forgot-password">
@@ -283,8 +278,9 @@ function Login() {
 		},
 		success: function(data){
 			if($.trim(data) == 'false'){
-				$("#chIdPwd").html("아이디 / 패스워드를 다시 확인해주세요");
-				$("#chIdPwd").css("color", "red");
+				console.log("dfsdfs");
+				$("#ckIdPwd").text("아이디 / 패스워드를 다시 확인해주세요");
+				$("#ckIdPwd").css("color", "red");
 			}else if($.trim(data) == 'true'){
 				$("#logindo").submit();
 			}
