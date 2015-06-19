@@ -138,10 +138,10 @@
 			</c:when>
 			<c:otherwise>
 			<li><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
-					Log In<span class="fa arrow"></span></a>
+					${user.userId }<span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level">
-					<li><a href="#login" data-toggle="modal">로그인</a></li>
-					<li><a href="#register" data-toggle="modal">회원가입</a></li> 
+					<li><a href="#login">MyPage</a></li>
+					<li><a href="/myProject2/logout.do">LogOut</a></li>  
 				</ul> <!-- /.nav-second-level -->
 			</li>
 			</c:otherwise>
@@ -195,7 +195,7 @@
 		        <div class="card card-container">
 		            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
 		            <p id="profile-name" class="profile-name-card"></p>
-		            <form class="form-signin">
+		            <form class="form-signin" id="logindo" action="/myProject2/logindo.do">
 		                <span id="reauth-email" class="reauth-email"></span>
 		                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 		                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
@@ -206,7 +206,7 @@
 		                        <input type="checkbox" value="remember-me"> Remember me
 		                    </label>
 		                </div>
-		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" style="cursor:pointer;" onclick="Check();">Sign in</button>
+		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="button" style="cursor:pointer;" onclick="Login();">Sign in</button>
 		            </form><!-- /form -->
 		            <a href="#" class="forgot-password">
 		                Forgot the password?
@@ -243,7 +243,7 @@
 		    </div><!-- /container -->
 	</div>
 </div>
-<script type="text/javascript" src="../js/join.js"></script> 
+
 <script>
 function addUser() {
 	$.ajax({

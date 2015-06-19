@@ -28,7 +28,6 @@
 <!-- Custom Fonts -->
 <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-
 <link href='http://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -88,7 +87,7 @@
     <script src="../js/sb-admin-2.js"></script>
     
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    
+    <script type="text/javascript" src="../js/join.js"></script> 
     
 <script type="text/javascript">
 function showDashboard(){
